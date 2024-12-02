@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+</head>
+<body>
+    <h1>Профиль</h1>
+<p>Ваш номер телефона: {{ user.phone_number }}</p>
+<p>Ваш инвайт-код: {{ user.invite_code }}</p>
+
+{% if user.referred_by %}
+    <p>Вы ввели инвайт-код: {{ user.referred_by.invite_code }}</p>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="invite_code">Введите инвайт-код:</label>
+        <input type="text" id="invite_code" name="invite_code" required>
+        <button type="submit">Активировать</button>
+    </form>
+{% endif %}
+
+<h2>Пользователи, которые ввели ваш инвайт-код:</h2>
+<ul>
+    {% for ref in referrals %}
+        <li>{{ ref.phone_number }}</li>
+    {% empty %}
+        <li>Пока никто не ввел ваш инвайт-код.</li>
+    {% endfor %}
+</ul>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+</body>
+</html>

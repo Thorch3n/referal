@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Верификация</title>
+</head>
+<body>
+    <h1>Верификация</h1>
+    <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        <label for="code">Введите код из SMS:</label>
+        <input type="text" id="code" name="code" placeholder="1234" required>
+        <button type="submit">Подтвердить</button>
+    </form>
+</body>
+</html>
